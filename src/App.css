@@ -1,11 +1,185 @@
-.App {
+/* .App {
+  text-align: center;
+} */
+
+body {
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.chatbox {
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+:root {
+  --primary: rgba(255, 255, 255, .4);
+  --white: #ffffff;
+}
+
+body {
+  background-color: #777;
+  background-image: url('../public/1.jpg');
+  background-size: cover;
+}
+
+#homepage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+#header {
+  padding: 15px;
+  padding-left: 30px;
+  /* text-align: center; */
+  font-size: 20px;
+  color: #444;
+  font-weight: bold;
+  background-color: var(--primary);
+}
+
+.footer {
+  padding: 10px;
+  background-color: var(--primary);
+  justify-content: center;
+  /* position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; */
+  display: flex;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#mainArea {
+  display: flex;
+  /* float: left; */
+  flex-grow: 1;
+
 }
+
+.logo {
+  width: 50px;
+  vertical-align: middle;
+  margin: 0px 30px;
+}
+
+.sidebar {
+  width: 100px;
+  background-color: var(--primary);
+  flex-shrink: 0;
+  float: left;
+  overflow: hidden;
+  height: auto;
+}
+
+.chatContainer {}
+
+.chatbox {
+  padding: 10px 20px;
+  min-width: 70vw;
+  /* background-color: #777; */
+  overflow: hidden;
+}
+
+.chattext {
+  background-color: rgba(255, 255, 255, .7);
+  padding: 10px 20px;
+  margin: 5px 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chatflex {
+  align-items: center;
+  display: flex;
+}
+
+.bsr {
+  box-shadow: 4px 5px 7px 0px rgba(0, 0, 0, 0.3);
+}
+
+.bsl {
+  box-shadow: -4px 5px 7px 0px rgba(0, 0, 0, 0.3);
+}
+
+.jcr {
+  justify-content: right;
+  margin-right: 10%;
+}
+
+.jcl {
+  justify-content: left;
+}
+
+#textarea {
+  width: 70%;
+  padding: 15px 30px;
+  border: 0px;
+  resize: none;
+  background-color: #ddd;
+  color: #333;
+  font-size: 14px;
+  border-radius: 10px;
+  outline: none;
+}
+
+.chatImg {
+  width: 30px;
+  vertical-align: middle;
+}
+
+#sendImg {
+  width: 40px;
+  margin-left: 10px;
+  vertical-align: super;
+}
+
+#cleartext {
+
+  width: 40px;
+  vertical-align: super;
+  opacity: 0;
+}
+
+.micimg {
+  width: 50px;
+  transition: all .5s;
+}
+
+.micimg:hover {
+  width: 51px;
+  opacity: .8;
+}
+
+.speakbtn {
+  /* padding:20px;
+  border-radius: 50%;
+  outline: none;
+  border: none; */
+  /* background-color: #666; */
+  align-items: center;
+  display: flex;
+  color: white;
+  margin-right: 20px;
+}
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -14,25 +188,94 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #686; */
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* font-size: calc(10px + 2vmin); */
+  /* color: white; */
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+
+
+/* Loading */
+/* bodY {
+  margin: 0;
+  padding: 0;
+} */
+.loading {
+  /* height: 100vh; */
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 20%;
+  margin-top: 50px;
+  animation: fadeInAnimation ease .5s;
+  /* background: #000; */
+}
+
+.wave {
+  width: 6px;
+  height: 50px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, .6), rgba(100, 100, 255, .9));
+  margin: 10px;
+  animation: wave 1s linear infinite;
+  border-radius: 20px;
+}
+
+.wave:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.wave:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.wave:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.wave:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.wave:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+.wave:nth-child(7) {
+  animation-delay: 0.6s;
+}
+
+.wave:nth-child(8) {
+  animation-delay: 0.7s;
+}
+
+.wave:nth-child(9) {
+  animation-delay: 0.8s;
+}
+
+.wave:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(0);
   }
-  to {
-    transform: rotate(360deg);
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
   }
 }
