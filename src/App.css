@@ -1,6 +1,4 @@
-/* .App {
-  text-align: center;
-} */
+
 :root {
   --primary: rgba(0, 0, 0, .2);
   --primary: rgba(255, 255, 255, .6);
@@ -22,25 +20,16 @@
 
 body {
   background-color: #777;
-  background-image: url('../public/2.jpg');
-  background-image: url('../public/bg.webp');
-  /* background-image: radial-gradient(rgb(255, 255, 255),  rgb(255, 128, 0)); */
-  /* background-image: linear-gradient(135deg, rgba(198, 74, 24, 1) 0%, rgba(255, 200, 200, 1) 29%, rgba(255, 245, 245, 1) 47%, rgba(255, 255, 255, 1) 51%, rgba(245, 255, 245, 1) 55%, rgba(200, 255, 200, 1) 69%, rgba(0, 152, 10, 1) 100%); */
+  background-image: url('../public/backgrounds/2.jpg');
+  background-image: url('../public/backgrounds/bg.webp');
   background-size: cover;
-  background-position: 0px 0px;
-  background-repeat: repeat-x;
-  animation: animatedBackground 10s linear infinite alternate;
-}
-
-
-
-body {
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   margin: 0;
   box-sizing: border-box;
 }
+
 
 .chatbox {
   animation: fadeInAnimation ease 2s;
@@ -58,8 +47,6 @@ body {
   }
 }
 
-
-
 #homepage {
   display: flex;
   flex-direction: column;
@@ -70,17 +57,22 @@ body {
 #header {
   padding: 15px;
   padding-left: 30px;
+  width: 100vw;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  overflow: hidden;
   background-color: var(--primary);
 }
 
 
 .footer {
-  /* padding: 10px; */
   background-color: var(--primary);
   justify-content: center;
   align-items: center;
   display: flex;
   text-align: center;
+  overflow: hidden;
 }
 
 #mainArea {
@@ -124,13 +116,12 @@ body {
 
 .navmenu {
   position: fixed;
-  padding-top: 10px;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
   left: 0;
-  /* height: 300px; */
   width: 100px;
   background-color: var(--sidebarColor);
   border-radius: 0 25px 25px 0;
@@ -144,16 +135,24 @@ body {
   padding: 0;
   margin: 7px 0;
   background-color: rgba(0, 0, 0, .4);
-  background: linear-gradient(45deg, rgba(0, 0, 0, .6), rgba(100, 100, 150, .5));
+  background: linear-gradient(45deg, rgba(60, 0, 0, .6), rgba(60, 60, 100, .9));
   border-radius: 100px;
   outline: none;
   border: none;
+  transition: all .5s;
+}
+
+.sidebarbutton:hover {
+  background-color: #668;
+  transform: scale(0.9);
 }
 
 .sidebaricon {
   width: 17px;
   margin: 17px;
 }
+
+
 
 .chatContainer {}
 
@@ -231,6 +230,7 @@ body {
   width: 40px;
   margin-left: 10px;
   transition: all .2s;
+  opacity: .9;
   /* vertical-align: super; */
 }
 
@@ -277,7 +277,7 @@ body {
 
 .App-header {
   /* background-color: #686; */
-  min-height: 100vh;
+  /* min-height: 100vh; */
   /* display: flex; */
   /* flex-direction: column; */
   /* align-items: center; */
@@ -374,10 +374,10 @@ body {
 
 /* Bg */
 body {
-  margin: auto;
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: auto;
-  background: linear-gradient(315deg, rgba(100, 190, 100, 1) 3%, rgba(140, 140, 140, 1) 38%, rgba(180, 100, 100, 1) 98%);
+  overflow: hidden;
+  background: linear-gradient(315deg, rgba(100, 190, 100, 1) 3%, rgba(140, 140, 140, 1) 38%, rgb(64, 45, 73) 98%);
   animation: gradient 15s ease infinite;
   background-size: 400% 400%;
   background-attachment: fixed;
