@@ -124,14 +124,14 @@ class Homepage extends Component {
     ChatMessage(props) {
         return <div className="chatbox" style={{ whiteSpace: "pre-wrap" }}>
             {props.user == "You" ?
-                <div className='chatflex jcl'>
-                    <div className='fl'><img src="/icons/user.png" className="chatImg" /></div>
-                    <div className='chattext bsr'>{props.message}</div>
-                </div>
-                :
                 <div className='chatflex jcr'>
                     <div className='chattext bsl'>{props.message}</div>
+                    <div className='fl'><img src="/icons/user.png" className="chatImg" /></div>
+                </div>
+                :
+                <div className='chatflex jcl'>
                     <div className='fl'><img src="/icons/ai.png" className="chatImg" /></div>
+                    <div className='chattext bsr'>{props.message}</div>
                 </div>
             }
         </div>;
@@ -191,7 +191,7 @@ class Homepage extends Component {
         var sound = localStorage.getItem("sound");
         if (sound == "no") {
             localStorage.setItem("sound", "yes");
-            alert("Narration enables");
+            alert("Narration enabled");
         }
         else {
             localStorage.setItem("sound", "no");
