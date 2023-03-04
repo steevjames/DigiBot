@@ -9,6 +9,7 @@ class Homepage extends Component {
         super(props);
         this.runSpeechRecognition = this.runSpeechRecognition.bind(this);
         this.GetResp = this.GetResp.bind(this);
+        this.clearChat = this.clearChat.bind(this);
         this.currentChat = [
             {
                 "role": "system",
@@ -32,9 +33,13 @@ class Homepage extends Component {
     }
 
     async getWebResponse(v) {
+
+        // key = sk-ooBI5w steev BmxaCG64H3l2EAT3BlbkFJDB2dkbr1gQorul4EuVIn
+
+        var key = localStorage.getItem("openaikey");
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer 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");
+        myHeaders.append("Authorization", "Bearer " + key);
         console.log(this.currentChat);
         // return;
         var raw = JSON.stringify({
@@ -54,8 +59,12 @@ class Homepage extends Component {
         var requestOptions = { method: 'POST', headers: myHeaders, body: raw, redirect: 'follow' };
 
         var response = await fetch("https://api.openai.com/v1/chat/completions", requestOptions);
+        if (response.status == 401) {
+            alert("OpenAPI bearer token provided is invalid. Please provide a valid token from the set token button in the sidebar.");
+            this.setState({ loading: false });
+        }
         if (!response.ok) {
-            this.setState({loading:false});
+            this.setState({ loading: false });
             throw Error(response.statusText)
         }
         return response.text();
@@ -78,11 +87,11 @@ class Homepage extends Component {
         // console.log(resp);
 
         this.addChat("AI", resp);
-        window.speechSynthesis.cancel()
+        window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(resp);
         var voices = window.speechSynthesis.getVoices();
         console.log(voices);
-        msg.voice = voices[4];
+        msg.voice = voices[191];
         window.speechSynthesis.speak(msg);
         this.setState({ speaking: false, loading: false });
     }
@@ -162,6 +171,23 @@ class Homepage extends Component {
         recognition.start();
     }
 
+    stopNarration() {
+        window.speechSynthesis.cancel();
+    }
+
+    clearChat() {
+        console.log("Clear chat");
+        this.setState({ chat: [{ "user": "AI", "message": "Hi, How can I help you ?" }] });
+    }
+
+    setOpenAPIKey() {
+        // window.confirm("test");
+        var key = prompt("You can get OpenAI key from\n https://platform.openai.com/account/api-keys \n\n Please enter OpenAPI key:");
+        if (key == null || key.length < 2) return;
+        localStorage.setItem("openaikey", key);
+        alert("New API key has been set !");
+    }
+
     LoadingAnimation() {
         return <div className="loading">
             <div className="wave"></div>
@@ -182,7 +208,19 @@ class Homepage extends Component {
         return (
             <div id="homepage">
                 <Header> </Header>
-                <div className='navmenu'>.</div>
+                <div>
+     <div class="wave2"></div>
+     <div class="wave2"></div>
+     <div class="wave2"></div>
+  </div>
+                <div className='navmenu'>
+                    {/* Mute Button */}
+                    <button className="sidebarbutton" onClick={this.stopNarration}><img src="/mute.png" className="sidebaricon" /></button>
+                    {/* Clear Button */}
+                    <button className="sidebarbutton" onClick={this.clearChat}><img src="/clear.png" className="sidebaricon" /></button>
+                    {/* API Key button */}
+                    <button className="sidebarbutton" onClick={this.setOpenAPIKey}><img src="/key.png" className="sidebaricon" /></button>
+                </div>
                 <div id="mainArea">
                     <div className='sidebar'>
                         <a onClick={() => this.setState({ inputValue: "" })}>
@@ -203,10 +241,10 @@ class Homepage extends Component {
                 <div className="footer">
 
                     {this.state.speaking == true ?
-                        <a className="speakbtn"><img className="micimg" src="micon.webp"/> </a>
+                        <a className="speakbtn"><img className="micimg" src="micon.webp" /> </a>
                         :
-                        <a className="speakbtn" onClick={this.runSpeechRecognition}> <img className="micimg" src="mic.png"/> </a>
-                        }
+                        <a className="speakbtn" onClick={this.runSpeechRecognition}> <img className="micimg" src="mic.png" /> </a>
+                    }
                     <textarea id="textarea" placeholder="Enter prompt here..." rows="1" cols="30" value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}
                         onKeyUp={this.handleEnterPress} />
                     <a onClick={() => this.GetResp()} id="sendreq">
