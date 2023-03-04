@@ -130,7 +130,7 @@ class Homepage extends Component {
                 </div>
                 :
                 <div className='chatflex jcl'>
-                    <div className='fl'><img src="/icons/ai.png" className="chatImg" /></div>
+                    <div className='fl'><img src="/icons/bot.png" className="chatImg" /></div>
                     <div className='chattext bsr'>{props.message}</div>
                 </div>
             }
