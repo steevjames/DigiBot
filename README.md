@@ -1,1 +1,1 @@
-Zeal AI: Anwering your questions quickly.
+DigiBot - Your Personal AI Assistant
