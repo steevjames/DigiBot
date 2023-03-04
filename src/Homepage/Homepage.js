@@ -4,8 +4,6 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 
 class Homepage extends Component {
 
-
-
     constructor(props) {
         window.speechSynthesis.getVoices();
         super(props);
@@ -21,7 +19,7 @@ class Homepage extends Component {
         {
             speaking: false,
             loading: false,
-            chat: [{ "user": "AI", "message": "How can I help you ?" },
+            chat: [{ "user": "AI", "message": "Hi, How can I help you ?" },
                 // { "user": "AI", "message": "message2 ".repeat(100) },
                 // { "user": "You", "message": "message" }, { "user": "AI", "message": "message2 ".repeat(100) }
                 // , { "user": "You", "message": "message" }, { "user": "AI", "message": "message2 ".repeat(100) }
@@ -33,12 +31,10 @@ class Homepage extends Component {
         };
     }
 
-
-
     async getWebResponse(v) {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer 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");
+        myHeaders.append("Authorization", "Bearer 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");
         console.log(this.currentChat);
         // return;
         var raw = JSON.stringify({
@@ -46,7 +42,7 @@ class Homepage extends Component {
             "messages": [
                 {
                     "role": "system",
-                    "content": "Pretend that you are an educated person and not an AI"
+                    "content": "Your name is Digibot. You are a program designed to help people. Do not provide further information about yourself."
                 },
                 {
                     "role": "user",
@@ -59,6 +55,7 @@ class Homepage extends Component {
 
         var response = await fetch("https://api.openai.com/v1/chat/completions", requestOptions);
         if (!response.ok) {
+            this.setState({loading:false});
             throw Error(response.statusText)
         }
         return response.text();
@@ -166,17 +163,17 @@ class Homepage extends Component {
     }
 
     LoadingAnimation() {
-        return <div class="loading">
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
+        return <div className="loading">
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
+            <div className="wave"></div>
         </div>
     }
 
@@ -185,6 +182,7 @@ class Homepage extends Component {
         return (
             <div id="homepage">
                 <Header> </Header>
+                <div className='navmenu'>.</div>
                 <div id="mainArea">
                     <div className='sidebar'>
                         <a onClick={() => this.setState({ inputValue: "" })}>
@@ -192,28 +190,22 @@ class Homepage extends Component {
                         </a>
                     </div>
                     <div className="chatContainer">
-                        {this.state.chat.map((chat) => <this.ChatMessage user={chat["user"]} message={chat["message"]} />)}
 
+                        {this.state.chat.map((chat) => <this.ChatMessage user={chat["user"]} message={chat["message"]} />)}
 
                         {this.state.loading == true ?
                             <this.LoadingAnimation />
                             :
                             <div></div>}
-
-
                     </div>
-
                 </div>
 
-
-                {/* Render the chat */}
                 <div className="footer">
 
-
-                    {this.state.speaking != true ?
-                        <a class="speakbtn"> <img class="micimg" src="mic.png"/> </a>
+                    {this.state.speaking == true ?
+                        <a className="speakbtn"><img className="micimg" src="micon.webp"/> </a>
                         :
-                        <a class="speakbtn" onClick={this.runSpeechRecognition}> <img class="micimg" src="mic.png"/> </a>
+                        <a className="speakbtn" onClick={this.runSpeechRecognition}> <img className="micimg" src="mic.png"/> </a>
                         }
                     <textarea id="textarea" placeholder="Enter prompt here..." rows="1" cols="30" value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}
                         onKeyUp={this.handleEnterPress} />

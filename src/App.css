@@ -47,21 +47,15 @@ body {
 #header {
   padding: 15px;
   padding-left: 30px;
-  /* text-align: center; */
-  font-size: 20px;
-  color: #444;
-  font-weight: bold;
   background-color: var(--primary);
 }
+
 
 .footer {
   padding: 10px;
   background-color: var(--primary);
   justify-content: center;
-  /* position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0; */
+  align-items: center;
   display: flex;
   text-align: center;
 }
@@ -77,15 +71,43 @@ body {
   width: 50px;
   vertical-align: middle;
   margin: 0px 30px;
+  transition: all .2s;
+}
+.logo:hover{
+  transform: scale(1.05);
+}
+
+.headerText{
+  transition: all .2s;
+  font-size: 18px;
+  font-weight: bold;
+  color:#334;
+  display: inline-block;
+}
+.headerText:hover{
+  font-size: 18.3px;
 }
 
 .sidebar {
   width: 100px;
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
   flex-shrink: 0;
   float: left;
   overflow: hidden;
   height: auto;
+}
+
+.navmenu{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  height: 300px;
+  width: 100px;
+  background-color: rgba(255, 255, 255, .4);
+  border-radius: 0 20px 20px 0;
+  top:50%;
+transform: translate(0,-50%);
 }
 
 .chatContainer {}
@@ -105,9 +127,15 @@ body {
   overflow: hidden;
 }
 
+
 .chatflex {
   align-items: center;
+  transition: all .2s;
   display: flex;
+}
+
+.chatflex:hover{
+  transform: scale(1.006);
 }
 
 .bsr {
@@ -128,13 +156,22 @@ body {
 }
 
 #textarea {
-  width: 70%;
+  width: 60%;
   padding: 15px 30px;
+  margin: 20px 0;
   border: 0px;
+  transition: all .2s;
   resize: none;
-  background-color: #ddd;
+  background-color: rgba(255, 255, 255, .7);
   color: #333;
   font-size: 14px;
+  border-radius: 10px;
+  outline: none;
+}
+
+#textarea:hover {
+  width: 61%;
+  background-color: rgba(255, 255, 255, .9);
   border-radius: 10px;
   outline: none;
 }
@@ -147,24 +184,29 @@ body {
 #sendImg {
   width: 40px;
   margin-left: 10px;
-  vertical-align: super;
+  transition: all .2s;
+  /* vertical-align: super; */
+}
+
+#sendImg:hover{
+  opacity: .7;
+  width: 43px;
 }
 
 #cleartext {
-
   width: 40px;
   vertical-align: super;
   opacity: 0;
 }
 
 .micimg {
-  width: 50px;
-  transition: all .5s;
+  width: 40px;
+  transition: all .2s;
 }
 
 .micimg:hover {
-  width: 51px;
-  opacity: .8;
+  width: 43px;
+  opacity: .6;
 }
 
 .speakbtn {

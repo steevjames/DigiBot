@@ -1,7 +1,7 @@
 function Header(props) {
     return <div id="header">
         <img src="/ai.png" className="logo"/>
-        DigiBot - Your Personal AI Assistant
+       <div className="headerText"> DigiBot - Your Personal AI Assistant</div>
     </div>;
   }
 
