@@ -159,8 +159,8 @@ class Homepage extends Component {
         recognition.onresult = function (event) {
             var transcript = event.results[0][0].transcript;
             var confidence = event.results[0][0].confidence;
-            console.log(event.results[0][0].transcript);
-            this.state.inputValue = event.results[0][0].transcript;
+            console.log(transcript);
+            this.state.inputValue = transcript;
             getResp();
         };
         recognition.onresult = recognition.onresult.bind(this);
