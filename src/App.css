@@ -52,6 +52,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
+  /* overflow-x: hidden; */
 }
 
 #header {
@@ -273,29 +274,6 @@ body {
   margin-right: 20px;
 }
 
-
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  /* background-color: #686; */
-  /* min-height: 100vh; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* font-size: calc(10px + 2vmin); */
-  /* color: white; */
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 .loading {
   /* height: 100vh; */
   display: flex;
@@ -440,5 +418,37 @@ body {
 
   100% {
     transform: translateX(1);
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    width: 0;
+    background-color: red;
+  }
+  .navmenu {
+    top:auto;
+    bottom: 100px;
+    width: 50px;
+    transform: translate(0,0);
+  }
+  .sidebaricon{
+    width: 10px ;
+  }
+  .chatflex{
+    display: grid;
+    margin-left: 50px;
+  }
+  .jcr {
+    text-align: right;
+    margin-right: 0%;
+  }
+  
+  .jcl {
+    justify-content: left;
+  }
+  .chatImg{
+    margin: 5px;
   }
 }
