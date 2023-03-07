@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import parser from 'html-react-parser';
 
 class Homepage extends Component {
 
@@ -9,6 +10,7 @@ class Homepage extends Component {
         this.runSpeechRecognition = this.runSpeechRecognition.bind(this);
         this.GetResp = this.GetResp.bind(this);
         this.clearChat = this.clearChat.bind(this);
+        this.ChatMessage = this.ChatMessage.bind(this);
         this.currentChat = [
             {
                 "role": "system",
@@ -37,7 +39,7 @@ class Homepage extends Component {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Bearer " + key);
-        console.log(this.currentChat);
+        // console.log(this.currentChat);
         // return;
         var raw = JSON.stringify({
             "model": "gpt-3.5-turbo",
@@ -57,14 +59,32 @@ class Homepage extends Component {
 
         var response = await fetch("https://api.openai.com/v1/chat/completions", requestOptions);
         if (response.status == 401) {
-            alert("OpenAPI bearer token provided is invalid. Please provide a valid token from the set token button in the sidebar.");
+            console.log("Unauthorised");
+            this.addChat("AI", "You have not configured a valid Open AI key. This can be configured using the 'Set OpenAI key' button from the sidebar. You can get an OpenAI key from here: <a href='https://platform.openai.com/account/api-keys' target='_blank'>OpenAI key</a> ");
+            // alert("OpenAPI bearer token provided is invalid. Please provide a valid token from the set token button in the sidebar.");
             this.setState({ loading: false });
         }
-        if (!response.ok) {
+        else if (!response.ok) {
+            if (response.status == 429) {
+                this.addChat("AI", "Servers are currently busy. Please try again later.");
+            }
+            else {
+                this.addChat("AI", "Something went wrong. Please try again later.");
+            }
             this.setState({ loading: false });
             throw Error(response.statusText)
         }
         return response.text();
+    }
+
+    speakText(resp) {
+        if (localStorage.getItem("sound") == "no") return;
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(resp);
+        var voices = window.speechSynthesis.getVoices();
+        // console.log(voices);
+        msg.voice = voices[191];
+        window.speechSynthesis.speak(msg);
     }
 
     async GetResp() {
@@ -84,13 +104,10 @@ class Homepage extends Component {
         // console.log(resp);
 
         this.addChat("AI", resp);
-        window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(resp);
-        var voices = window.speechSynthesis.getVoices();
-        console.log(voices);
-        msg.voice = voices[191];
-        if (localStorage.getItem("sound") != "no")
-            window.speechSynthesis.speak(msg);
+
+
+        this.speakText(resp);
+
         this.setState({ speaking: false, loading: false });
     }
 
@@ -131,7 +148,9 @@ class Homepage extends Component {
                 :
                 <div className='chatflex jcl'>
                     <div className='fl'><img src="/icons/bot.png" className="chatImg" /></div>
-                    <div className='chattext bsr'>{props.message}</div>
+                    <a onClick={(e) => this.speakText(e.target.textContent)}>
+                        <div className='chattext bsr'>{parser(props.message)}</div>
+                    </a>
                 </div>
             }
         </div>;
@@ -152,11 +171,13 @@ class Homepage extends Component {
 
         recognition.onspeechend = function () {
             console.log("End of speech");
+            this.setState({ speaking: false });
             recognition.stop();
         }
 
         // This runs when the speech recognition service returns result
         recognition.onresult = function (event) {
+            this.setState({ speaking: false });
             var transcript = event.results[0][0].transcript;
             var confidence = event.results[0][0].confidence;
             console.log(transcript);
@@ -164,6 +185,7 @@ class Homepage extends Component {
             getResp();
         };
         recognition.onresult = recognition.onresult.bind(this);
+        recognition.onspeechend = recognition.onspeechend.bind(this);
 
         // start recognition
         recognition.start();
@@ -176,6 +198,7 @@ class Homepage extends Component {
     clearChat() {
         console.log("Clear chat");
         this.setState({ chat: [{ "user": "AI", "message": "Hi, How can I help you ?" }] });
+        window.speechSynthesis.cancel();
     }
 
     setOpenAPIKey() {
@@ -188,6 +211,7 @@ class Homepage extends Component {
     }
 
     toggleSound() {
+        window.speechSynthesis.cancel();
         var sound = localStorage.getItem("sound");
         if (sound == "no") {
             localStorage.setItem("sound", "yes");
@@ -233,10 +257,10 @@ class Homepage extends Component {
 
                     {/* API Key button */}
                     <button title="Toggle Narration" className="sidebarbutton" onClick={this.toggleSound}><img src="/icons/narration.png" className="sidebaricon" /></button>
-
                 </div>
+
                 <div id="mainArea">
-                    <div className='sidebar'>
+                    <div className='sidespacing'>
                         <a onClick={() => this.setState({ inputValue: "" })}>
                             <img src="/icons/send.png" id='cleartext' />
                         </a>
